@@ -5,12 +5,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
 import { CreateUserUseCase } from './useCases/create.user.useCase';
+import { UpdateUserUseCase } from './useCases/update.user.useCase';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject(CreateUserUseCase)
     private createUserUseCase: CreateUserUseCase,
+    @Inject(UpdateUserUseCase)
+    private updateUserUseCase: UpdateUserUseCase,
     @InjectModel(User.name)
     private userModel: Model<User>,
   ) {}
@@ -28,11 +31,7 @@ export class UsersService {
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
-    this.userModel
-      .findOneAndUpdate({ _id: id }, updateUserDto, {
-        rawResult: true,
-      })
-      .exec();
+    return this.updateUserUseCase.update(id, updateUserDto);
   }
 
   remove(id: string) {
