@@ -7,6 +7,7 @@ import { Model } from 'mongoose';
 import { CreateUserUseCase } from './useCases/create.user.useCase';
 import { UpdateUserUseCase } from './useCases/update.user.useCase';
 import { FindAllUserDto } from './dto/findAll-user.dto';
+import { FindAllUserMap } from './mappers/findAll-user.map';
 
 @Injectable()
 export class UsersService {
@@ -23,13 +24,9 @@ export class UsersService {
     return this.createUserUseCase.execute(createUserDto);
   }
 
-  findAll(): Promise<FindAllUserDto> {
-    const usuarios = this.userModel.find().exec();
-    return {
-      name: usuarios.name,
-      email: usuarios.email,
-      password: usuarios.password,
-    } as FindAllUserDto;
+  async findAll(): Promise<Array<FindAllUserDto>> {
+    const usuarios = await this.userModel.find().exec();
+    return FindAllUserMap.execute(usuarios);
   }
 
   findOne(id: string) {

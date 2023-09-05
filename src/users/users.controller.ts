@@ -36,7 +36,7 @@ export class UsersController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 404, description: 'Not Found' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
-  findAll(): Promise<FindAllUserDto> {
+  findAll(): Promise<Array<FindAllUserDto>> {
     return this.usersService.findAll();
   }
 
