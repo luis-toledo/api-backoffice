@@ -29,6 +29,7 @@ export class UsersService {
     return FindAllUserMap.execute(usuarios);
   }
 
+  // AJUSTE PARA FAZER -> TRAZER SOMENTE NOME E EMAIL
   findOne(id: string) {
     return this.userModel.findById(id).exec();
   }

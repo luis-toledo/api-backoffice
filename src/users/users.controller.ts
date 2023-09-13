@@ -31,7 +31,11 @@ export class UsersController {
 
   @Get()
   @ApiOperation({ summary: 'Buscar todos usuários' })
-  @ApiResponse({ status: 200, description: 'Ok' })
+  @ApiResponse({
+    status: 200,
+    description: 'Ok',
+    type: FindAllUserDto,
+  })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 404, description: 'Not Found' })

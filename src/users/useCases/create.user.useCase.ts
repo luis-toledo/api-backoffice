@@ -18,12 +18,17 @@ export class CreateUserUseCase {
       if (user) {
         throw new BadRequestException('Usuário já existente');
       }
+
       const saltOrRounds = 10;
       const passToHash = await bcrypt.hash(
         createUserDto.password,
         saltOrRounds,
       );
-      await new this.userModel({ createUserDto, password: passToHash }).save();
+
+      await new this.userModel({
+        ...createUserDto,
+        password: passToHash,
+      }).save();
     } catch (error) {
       throw new BadRequestException(error);
     }

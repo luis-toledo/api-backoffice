@@ -14,8 +14,8 @@ export class UpdateUserUseCase {
       if (user) {
         throw new BadRequestException('Email já cadastrado');
       }
-      this.userModel
-        .findOneAndUpdate({ _id: id, updateUserDto }, { rawResult: true })
+      await this.userModel
+        .findOneAndUpdate({ _id: id }, { ...updateUserDto })
         .exec();
     } catch (error) {
       throw new BadRequestException(error);
